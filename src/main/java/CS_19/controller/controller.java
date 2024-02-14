@@ -2,6 +2,8 @@ package CS_19.controller;
 
 import CS_19.Service.UService;
 import CS_19.dto.UserDto;
+import CS_19.mail_details.maildto;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +15,7 @@ import java.util.List;
 public class controller {
     @Autowired
     private  UService uService;
+
    @GetMapping("/get/user")
    public List<UserDto> dispaly(){
      return uService.getdata();
@@ -41,6 +44,11 @@ public class controller {
    @GetMapping("details/{email}")
    public  UserDto get_details_id_email(@PathVariable String email){
        return uService.getuserBy_Email(email);
+   }
+   @PostMapping("send/email")
+   public String post_emai(@RequestBody maildto Maildto){
+    return uService.mailsender(Maildto);
+
    }
 
 }
