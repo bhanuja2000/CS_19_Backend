@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("api/v/user")
 @CrossOrigin
@@ -22,10 +23,11 @@ public class controller {
    }
 
    @PostMapping("/post/user")
-   public UserDto post(@RequestBody UserDto userDto){
+   public String post(@RequestBody UserDto userDto){
 
-       uService.savedata(userDto);
-       return userDto;
+      
+       return  uService.savedata(userDto);
+
    }
    @PutMapping("update/user")
    public UserDto update_user(@RequestBody UserDto userDto){
@@ -37,18 +39,28 @@ public class controller {
      return uService.delete_by_user(userDto);
    }
    @GetMapping("withID/{userid}")
+    public String  get_details_with_userID(@PathVariable String userid){
+       //return uService.get_user_byId(userid);
+       return userid;
 
-    public UserDto  get_details_with_userID(@PathVariable String userid){
-       return uService.get_user_byId(userid);
    }
-   @GetMapping("details/{email}")
-   public  UserDto get_details_id_email(@PathVariable String email){
-       return uService.getuserBy_Email(email);
-   }
+//    @GetMapping("details/{email}")
+//    public  UserDto get_details_id_email(@PathVariable String email){
+//        return uService.findby_email(email);
+
+   //}
    @PostMapping("send/email")
    public String post_emai(@RequestBody maildto Maildto){
     return uService.mailsender(Maildto);
 
    }
-
+//    @GetMapping("/fromname/{name}")
+//    public UserDto finbyname(@PathVariable String name) {
+//     return uService.getdetailby_name(name);
+//     //return "Parameter received: " + param;
+// }
+// @GetMapping("/froemail/{email}")
+//     public  UserDto findbyemai(@PathVariable String email){
+//     return  uService.findby_email(email);
+// }
 }

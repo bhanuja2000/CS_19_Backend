@@ -3,16 +3,22 @@ package CS_19.Service;
 import CS_19.Entity.User;
 import CS_19.dto.UserDto;
 import CS_19.mail_details.maildto;
+
 import CS_19.repo.UserRepo;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+
 import java.util.List;
+//import org.springframework.security.crypto.password.PasswordEncoder;
+
 
 @Service
 @Transactional
@@ -20,18 +26,34 @@ public class UService {
     @Autowired
    private UserRepo userRepo;
     @Autowired
-    ModelMapper modelMapper;
+   private ModelMapper modelMapper;
 
 
 
-    public UserDto savedata(UserDto userDto){
+
+   
+
+
+    public String savedata(UserDto userDto){
         if (userRepo.existsById(userDto.getId())) {
-            return userDto;
+            return "Aleady Exite";
         }
         else{
-            userRepo.save(modelMapper.map(userDto,User.class ));
+           
+            User user=new User();
+            user.setId(userDto.getId());
+            user.setEmail(userDto.getEmail());
+           user.setPassword(userDto.getPassword());
+            user.setName(userDto.getName());
+            user.setMobile(userDto.getMobile());
+            user.setUser_role(userDto.getUser_role());
+            
+            userRepo.save(user);
+        
+           // userRepo.save(modelMapper.map(userDto,User.class ));
+           return "registation sucsess";
         }
-        return userDto;
+     
         
     }
     public List<UserDto>getdata(){
@@ -47,14 +69,17 @@ public class UService {
         userRepo.delete(modelMapper.map(userDto,User.class));
         return true;
     }
-    public UserDto get_user_byId(String userId){
-        User user=userRepo.get_selected_user(userId);
-        return modelMapper.map(user,UserDto.class);
-    }
-    public UserDto getuserBy_Email(String email){
-        User user=userRepo.get_selected_address_id(email);
-        return modelMapper.map(user,UserDto.class);
-    }
+
+    // public UserDto getdetailby_name(String name){
+    //     User user=userRepo.getUserByname(name);
+    //     UserDto nuser=new UserDto();
+    //     nuser.setEmail(user.getEmail());
+    //     nuser.setPassword(user.getPassword());
+    //     nuser.setMobile(user.getMobile());
+    //     nuser.setId(user.getId());
+    //     nuser.setName(user.getName());
+    //     return nuser;
+    // }
     @Autowired
     private JavaMailSender javaMailSender;
     public String mailsender(maildto Maildto){
@@ -72,4 +97,9 @@ public class UService {
 
 
     }
+    // public UserDto findby_email(String email){
+    //     User user=userRepo.get_selected_address_id(email);
+    //     return modelMapper.map(user,UserDto.class);
+    // }
+
 }
