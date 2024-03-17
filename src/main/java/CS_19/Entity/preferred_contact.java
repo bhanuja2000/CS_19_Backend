@@ -1,4 +1,4 @@
-package CS_19.dto;
+package CS_19.Entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -8,25 +8,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class location {
-
+@Entity
+public class preferred_contact {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int location_id;
-
-
-    private String Time;
-
-    private  String Latitude;
-    private  String Longitude;
- 
-  
+    private Long id;
+    String useremail;
+    String contacts;
 
 }
-
-    
-

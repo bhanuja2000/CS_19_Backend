@@ -1,25 +1,26 @@
-package CS_19.config;
+package CS_19.config.user;
 
-import java.util.Arrays;
-import java.util.Collection;
 
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import CS_19.Entity.UserInfoEntity;
 
-import CS_19.Entity.User;
-import lombok.RequiredArgsConstructor;
+import java.util.Arrays;
+import java.util.Collection;
+
+
 @RequiredArgsConstructor
-public class UserInfoconfig implements UserDetails {
-    private final User userinfoE;
-
+public class UserInfoConfig implements UserDetails {
+    private final UserInfoEntity userInfoEntity;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-       
         return Arrays
-                .stream(userinfoE
-                        .getUser_role()
+                .stream(userInfoEntity
+                        .getRoles()
                         .split(","))
                 .map(SimpleGrantedAuthority::new)
                 .toList();
@@ -27,19 +28,16 @@ public class UserInfoconfig implements UserDetails {
 
     @Override
     public String getPassword() {
-       
-        return userinfoE.getPassword();
+        return userInfoEntity.getPassword();
     }
 
     @Override
     public String getUsername() {
-      return userinfoE.getEmail();
-        
+        return userInfoEntity.getEmailId();
     }
 
     @Override
     public boolean isAccountNonExpired() {
-       
         return true;
     }
 
@@ -57,5 +55,4 @@ public class UserInfoconfig implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
-    
 }

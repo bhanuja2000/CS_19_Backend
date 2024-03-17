@@ -1,4 +1,5 @@
-package CS_19.mail_details;
+package CS_19.dto;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,5 +15,5 @@ public class maildto {
     private  String from;
 
 
-    
+
 }
