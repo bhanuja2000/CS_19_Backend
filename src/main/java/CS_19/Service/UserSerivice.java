@@ -6,6 +6,8 @@ import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import CS_19.Entity.EmergencyLocation;
@@ -35,6 +37,11 @@ public class UserSerivice {
     private emergencyrepo erepo;
     @Autowired
     private preferredcobtacrepo prep;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+
+    int confomation_number;
 
 
     public List<userdetailsdto>getdata(){
@@ -132,8 +139,8 @@ public class UserSerivice {
                 message.setTo(email);
                 message.setFrom("bhanujanimsara@gmail.com");
                 Random random=new Random();
-                int randomnumber= random.nextInt(900)+1000;
-                message.setText("Password Reset code"+randomnumber);
+                confomation_number= random.nextInt(900)+1000;
+                message.setText("Password Reset code"+confomation_number);
                 javaMailSender.send(message);
                 return "okay";
             }catch(Exception e){
@@ -145,6 +152,25 @@ public class UserSerivice {
             return "not found";
         }
 
+    }
+    public String  updatepasswor(String username,String newPaasword){
+        try{
+            UserInfoEntity user=repo.getUserByEmailID(username);
+            String password=passwordEncoder.encode(newPaasword);
+            user.setPassword(password);
+            repo.save(user);
+            return  "okay";
+        }catch(Exception e){return e.getMessage();}
+
+
+    }
+    public boolean checkconfomationnumbercorrect(int user_entred_confomationnumber){
+        if (confomation_number==user_entred_confomationnumber){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 }
 

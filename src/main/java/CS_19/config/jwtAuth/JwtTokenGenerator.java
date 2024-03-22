@@ -52,7 +52,7 @@ public class JwtTokenGenerator {
         log.info("[JwtTokenGenerator:generateRefreshToken] Token Creation Started for:{}", authentication.getName());
 
         JwtClaimsSet claims = JwtClaimsSet.builder()
-                .issuer("atquil")
+                .issuer("Bhanuja")
                 .issuedAt(Instant.now())
                 .expiresAt(Instant.now().plus(15 , ChronoUnit.DAYS))
                 .subject(authentication.getName())

@@ -27,4 +27,5 @@ public interface UserInfoRepo extends JpaRepository<UserInfoEntity,Long> {
 
 
 
+
 }

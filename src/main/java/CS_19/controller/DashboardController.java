@@ -96,5 +96,18 @@ public class DashboardController {
         String email=request.get("email");
         return userSerivice.emailcheck(email);
     }
+    @PostMapping("/passwordreset")
+    public  String uppassword(@RequestBody Map<String,String>request){
+        String email=request.get("email");
+        String password=request.get("password");
+        return userSerivice.updatepasswor(email,password);
+    }
+    @PostMapping("/confomation")
+    public  boolean confomcheck(@RequestBody Map<String, Integer>request){
+      int number=request.get("confomation");
+      return userSerivice.checkconfomationnumbercorrect(number);
+    }
+
+
 }
 
